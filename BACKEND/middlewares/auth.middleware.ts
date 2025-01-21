@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
+import * as jwt from 'jsonwebtoken';
 
-const SECRET = process.env.JWT_SECRET || 'supersecret';
+const SECRET = process.env.JWT_SECRET;
 
 interface AuthRequest extends Request {
     userId?: string;

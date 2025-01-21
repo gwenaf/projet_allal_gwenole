@@ -3,6 +3,7 @@ import { AddressInfo } from "net";
 import * as path from 'path';
 import cors from 'cors';
 import helmet from 'helmet';
+import * as dotenv from 'dotenv';
 
 import routes from './routes/index';
 import users from './routes/user';
@@ -10,6 +11,7 @@ import authRoutes from './routes/auth.routes';
 import productRoutes from './routes/product.routes';
 import paymentRoutes from './routes/payment.routes';
 
+dotenv.config();
 
 const debug = require('debug')('my express app');
 const app = express();
@@ -27,7 +29,6 @@ app.use(express.json());
 app.use('/', routes);
 
 
-app.use('/users', users);
 app.use('/auth', authRoutes);
 app.use('/products', productRoutes);
 app.use('/payment', paymentRoutes);
@@ -63,6 +64,7 @@ app.use((err, req, res, next) => { // eslint-disable-line @typescript-eslint/no-
         error: {}
     });
 });
+
 
 app.set('port', process.env.PORT || 3000);
 
