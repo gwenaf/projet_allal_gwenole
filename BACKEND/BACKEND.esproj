@@ -5,5 +5,6 @@
     <!--Command to run on project clean-->
     <CleanCommand>npm run clean</CleanCommand>
     <StartupCommand>set PORT=1337 &amp; npm run start</StartupCommand>
+	<TypeScriptCompileBlocked>false</TypeScriptCompileBlocked>
   </PropertyGroup>
 </Project>

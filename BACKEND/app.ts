@@ -1,7 +1,8 @@
 import * as express from 'express';
+import { Request, Response, NextFunction } from 'express';
 import { AddressInfo } from "net";
 import * as path from 'path';
-import cors from 'cors';
+import * as cors from 'cors';
 import helmet from 'helmet';
 import * as dotenv from 'dotenv';
 
@@ -10,6 +11,12 @@ import users from './routes/user';
 import authRoutes from './routes/auth.routes';
 import productRoutes from './routes/product.routes';
 import paymentRoutes from './routes/payment.routes';
+
+
+interface CustomError extends Error {
+    status?: number;
+}
+
 
 dotenv.config();
 
@@ -35,8 +42,8 @@ app.use('/payment', paymentRoutes);
 
 
 // catch 404 and forward to error handler
-app.use((req, res, next) => {
-    const err = new Error('Not Found');
+app.use((req: Request, res: Response, next: NextFunction) => {
+    const err: CustomError = new Error('Not Found');
     err[ 'status' ] = 404;
     next(err);
 });
@@ -46,7 +53,7 @@ app.use((req, res, next) => {
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use((err, req, res, next) => { // eslint-disable-line @typescript-eslint/no-unused-vars
+    app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => { // eslint-disable-line @typescript-eslint/no-unused-vars
         res.status(err[ 'status' ] || 500);
         res.render('error', {
             message: err.message,
@@ -57,7 +64,7 @@ if (app.get('env') === 'development') {
 
 // production error handler
 // no stacktraces leaked to user
-app.use((err, req, res, next) => { // eslint-disable-line @typescript-eslint/no-unused-vars
+app.use((err: CustomError, req: Request, res: Response, next: NextFunction) => { // eslint-disable-line @typescript-eslint/no-unused-vars
     res.status(err.status || 500);
     res.render('error', {
         message: err.message,
