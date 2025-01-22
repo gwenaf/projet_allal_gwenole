@@ -1,0 +1,56 @@
+<div class="paiement-container">
+  <h2>Checkout</h2>
+  <p>Please write down your informations in order to complete the order</p>
+
+  <form [formGroup]="carteForm" (ngSubmit)="onSubmit()" class="carte-form-container">
+    <div>
+      <label for="nomCarte">Owner</label>
+      <input id="nomCarte" type="text" formControlName="nomCarte" />
+    </div>
+    <div>
+      <label for="codeCarte">Secret Code</label>
+      <input id="codeCarte" type="text" formControlName="codeCarte" maxlength="16" />
+    </div>
+    <div>
+      <label for="ccv">CCV</label>
+      <input id="ccv" type="text" formControlName="ccv" maxlength="3" />
+    </div>
+    <div>
+      <label for="dateExpiration">Expiration Date</label>
+      <input id="dateExpiration" type="text" formControlName="dateExpiration" placeholder="MM/YYYY" />
+    </div>
+    <button type="submit" [disabled]="carteForm.invalid">
+      {{ selectedCardId ? 'Update' : 'Add card' }}
+    </button>
+    <button type="button" (click)="resetForm()">Reset</button>
+  </form>
+
+  <div *ngIf="cards()?.length ?? 0 > 0; else noCards" class="card-list-container">
+    <h3>Saved Cards</h3>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Card Owner</th>
+          <th>Secret Code</th>
+          <th>Expiration Date</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let card of cards()">
+          <td>{{ card.nomCarte }}</td>
+          <td>{{ card.codeCarte | slice:-4 | obfuscateCard }}</td>
+          <td>{{ card.dateExpiration }}</td>
+          <td>
+            <button class="bouton-carte" (click)="editCard(card.id)">Edit</button>
+            <button class="bouton-carte" (click)="removeCard(card.id)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>    
+  </div>
+
+  <ng-template #noCards>
+    <p>No saved card</p>
+  </ng-template>
+</div>

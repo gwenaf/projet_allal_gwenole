@@ -1,0 +1,38 @@
+<div class="panier-container">
+  <h2>My Cart</h2>
+
+  <div *ngIf="items$ | async as cartItems">
+    <div *ngIf="cartItems && cartItems.length > 0; else empty">
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Total Price</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of cartItems">
+            <td>{{ item.product.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.product.price | decimalRound:2 }} €</td>
+            <td>{{ (item.product.price * item.quantity) | decimalRound:2 }} €</td>
+            <td>
+              <button (click)="decrementQuantity(item.product.id)">-</button>
+              <button (click)="removeItem(item.product.id)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>      
+      <div class="payment-button">
+       <button class="payment-button" (click)="goToPayment()">Process to payment</button>
+       <button class="payment-button" (click)="goToCatalog()">Go back</button>
+      </div>
+    </div>
+  </div>
+  <ng-template #empty>
+    <p>Your cart is empty</p>
+  </ng-template>
+</div>

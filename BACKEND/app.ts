@@ -7,7 +7,6 @@ import helmet from 'helmet';
 import * as dotenv from 'dotenv';
 
 import routes from './routes/index';
-import users from './routes/user';
 import authRoutes from './routes/auth.routes';
 import productRoutes from './routes/product.routes';
 import paymentRoutes from './routes/payment.routes';
@@ -29,7 +28,7 @@ app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use(cors());
+app.use(cors());
 app.use(helmet());
 app.use(express.json());
 

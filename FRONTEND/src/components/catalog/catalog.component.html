@@ -1,0 +1,48 @@
+<div class="header-actions">
+  <button [routerLink]="['/account-detail']" class="bouton-redirection">
+    My account
+  </button>
+  <button [routerLink]="['/cart']" class="bouton-redirection">
+    My cart
+  </button>
+</div>
+
+<div class="search-container">
+  <app-product-search
+    [products]="products"
+    (filterChange)="onFilterChange($event)">
+  </app-product-search>
+</div>
+
+<div class="catalog-container">
+  <h2>Catalog</h2>
+
+  <p class="cart-summary">
+    Items in cart : {{ totalCount$ | async }}
+  </p>
+
+  <div class="table-wrapper">
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Price</th>
+          <th>Stock</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of filteredProducts">
+          <td>{{ p.name }}</td>
+          <td>{{ p.price }} €</td>
+          <td>{{ p.stock }}</td>
+          <td>
+            <button class="bouton-add" (click)="addProductToCart(p)">
+              Add to cart
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

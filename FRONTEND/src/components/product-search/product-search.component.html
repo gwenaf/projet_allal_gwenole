@@ -1,0 +1,16 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSearch()" class="search-form">
+  <div>
+    <label for="name">Name</label>
+    <input type="text" id="name" formControlName="name" />
+  </div>
+
+  <div>
+    <label for="maxPrice">Max price</label>
+    <input type="number" id="maxPrice" formControlName="maxPrice" />
+  </div>
+
+  <div>
+    <button type="submit">Search</button>
+    <button type="button" (click)="onReset()">Reset</button>
+  </div>
+</form>
